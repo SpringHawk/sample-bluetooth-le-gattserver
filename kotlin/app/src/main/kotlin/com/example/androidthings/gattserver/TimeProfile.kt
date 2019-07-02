@@ -39,8 +39,8 @@ object TimeProfile {
     val CLIENT_CONFIG: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
 
     /* Second Custom Service */
-    val serialService: UUID = UUID.fromString("")
-    val serialCharacteristic : UUID = UUID.fromString("")
+    val serialService: UUID = UUID.fromString("99cdf065-54db-49ce-8225-b2aed2ced15e")
+    val serialCharacteristic : UUID = UUID.fromString("98cdf065-54db-49ce-8225-b2aed2ced15e")
 
     // Adjustment Flags
     const val ADJUST_NONE: Byte = 0x0
