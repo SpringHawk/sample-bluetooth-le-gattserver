@@ -105,7 +105,7 @@ object TimeProfile {
 
         // Local Time Information characteristic
         val serialChar = BluetoothGattCharacteristic(serialCharacteristic,
-                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE,
+                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE,
                 BluetoothGattCharacteristic.PERMISSION_WRITE)
 
         service.addCharacteristic(serialChar)

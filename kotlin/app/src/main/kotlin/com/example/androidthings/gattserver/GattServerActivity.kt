@@ -41,6 +41,7 @@ import android.text.format.DateFormat
 import android.util.Log
 import android.view.WindowManager
 import android.widget.TextView
+import java.lang.Exception
 
 import java.util.Arrays
 import java.util.Date
@@ -334,13 +335,17 @@ class GattServerActivity : Activity() {
      * from the Time Profile.
      */
     private fun startServer() {
-        bluetoothGattServer = bluetoothManager.openGattServer(this, gattServerCallback)
+        try {
+            bluetoothGattServer = bluetoothManager.openGattServer(this, gattServerCallback)
 
-        bluetoothGattServer?.addService(TimeProfile.createTimeService())
-                ?: Log.w(TAG, "Unable to create GATT server")
+            bluetoothGattServer?.addService(TimeProfile.createTimeService())
+                    ?: Log.w(TAG, "Unable to create GATT server")
 
-        bluetoothGattServer?.addService(TimeProfile.createSerialService())
-                ?: Log.w(TAG, "Unable to create GATT server")
+            bluetoothGattServer?.addService(TimeProfile.createSerialService())
+                    ?: Log.w(TAG, "Unable to create GATT server")
+        } catch (e: Exception) {
+            Log.e("Exception", e.printStackTrace().toString())
+        }
 
         // Initialize the local UI
         updateLocalUi(System.currentTimeMillis())
