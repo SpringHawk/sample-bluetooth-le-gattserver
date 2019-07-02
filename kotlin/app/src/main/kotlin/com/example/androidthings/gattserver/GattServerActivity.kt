@@ -125,6 +125,10 @@ class GattServerActivity : Activity() {
             }
         }
 
+        override fun onCharacteristicWriteRequest(device: BluetoothDevice?, requestId: Int, characteristic: BluetoothGattCharacteristic?, preparedWrite: Boolean, responseNeeded: Boolean, offset: Int, value: ByteArray?) {
+            Log.e("IncommingRequest", "Request from $characteristic: ${value!![0]}")
+        }
+
         override fun onCharacteristicReadRequest(device: BluetoothDevice, requestId: Int, offset: Int,
                                                  characteristic: BluetoothGattCharacteristic) {
             val now = System.currentTimeMillis()
@@ -333,6 +337,9 @@ class GattServerActivity : Activity() {
         bluetoothGattServer = bluetoothManager.openGattServer(this, gattServerCallback)
 
         bluetoothGattServer?.addService(TimeProfile.createTimeService())
+                ?: Log.w(TAG, "Unable to create GATT server")
+
+        bluetoothGattServer?.addService(TimeProfile.createSerialService())
                 ?: Log.w(TAG, "Unable to create GATT server")
 
         // Initialize the local UI

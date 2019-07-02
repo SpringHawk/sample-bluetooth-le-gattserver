@@ -38,6 +38,10 @@ object TimeProfile {
     /* Mandatory Client Characteristic Config Descriptor */
     val CLIENT_CONFIG: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
 
+    /* Second Custom Service */
+    val serialService: UUID = UUID.fromString("")
+    val serialCharacteristic : UUID = UUID.fromString("")
+
     // Adjustment Flags
     const val ADJUST_NONE: Byte = 0x0
     const val ADJUST_MANUAL: Byte = 0x1
@@ -86,12 +90,25 @@ object TimeProfile {
 
         // Local Time Information characteristic
         val localTime = BluetoothGattCharacteristic(LOCAL_TIME_INFO,
-                //Read-only characteristic
-                BluetoothGattCharacteristic.PROPERTY_READ,
-                BluetoothGattCharacteristic.PERMISSION_READ)
+                BluetoothGattCharacteristic.PROPERTY_READ or BluetoothGattCharacteristic.PROPERTY_WRITE,
+                BluetoothGattCharacteristic.PERMISSION_WRITE)
 
         service.addCharacteristic(currentTime)
         service.addCharacteristic(localTime)
+
+        return service
+    }
+
+    fun createSerialService(): BluetoothGattService {
+        val service = BluetoothGattService(serialService,
+                BluetoothGattService.SERVICE_TYPE_PRIMARY)
+
+        // Local Time Information characteristic
+        val serialChar = BluetoothGattCharacteristic(serialCharacteristic,
+                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE,
+                BluetoothGattCharacteristic.PERMISSION_WRITE)
+
+        service.addCharacteristic(serialChar)
 
         return service
     }
